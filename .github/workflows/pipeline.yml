@@ -39,7 +39,7 @@ jobs:
       - name: Build and push ${{ env.platform }}
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./Dockerfiles/${{ env.os }}/${{ env.version }}
           file: ./Dockerfiles/${{ env.os }}/${{ env.version }}/Dockerfile
           platforms: ${{ env.platform }}
           push: ${{ github.event_name != 'pull_request' }}
