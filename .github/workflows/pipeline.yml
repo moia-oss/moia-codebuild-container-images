@@ -14,13 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [ 'amd64', 'arm64']
-    name: Build on Ubuntu 22.04 for linux/${{ matrix.version }}
+        architecture: [ 'amd64', 'arm64']
+    name: Build on Ubuntu 22.04 for linux/${{ matrix.architecture }}
     env:
       os: "ubuntu"
       version: "22.04"
       alias: "jammy"
-      platform: "linux/${{ matrix.version }}"
     steps:
       - uses: actions/checkout@v3
       - name: Set up QEMU 
@@ -43,9 +42,9 @@ jobs:
         with:
           context: ./Dockerfiles/${{ env.os }}/${{ env.version }}
           file: ./Dockerfiles/${{ env.os }}/${{ env.version }}/Dockerfile
-          platforms: ${{ env.platform }}
+          platforms: "linux/${{ matrix.architecture }}"
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            public.ecr.aws/s6w2n1r6/codebuild-${{ matrix.version }}-${{ env.os }}:latest
-            public.ecr.aws/s6w2n1r6/codebuild-${{ matrix.version }}-${{ env.os }}:${{ env.version }}
-            public.ecr.aws/s6w2n1r6/codebuild-${{ matrix.version }}-${{ env.os }}:${{ env.alias }}
+            public.ecr.aws/s6w2n1r6/codebuild-${{ matrix.architecture }}-${{ env.os }}:latest
+            public.ecr.aws/s6w2n1r6/codebuild-${{ matrix.architecture }}-${{ env.os }}:${{ env.version }}
+            public.ecr.aws/s6w2n1r6/codebuild-${{ matrix.architecture }}-${{ env.os }}:${{ env.alias }}
