@@ -32,6 +32,23 @@ where
 * `os` is the operation system name e.g. `ubuntu`
 * `version` is the container image tag e.g. `latest`
 
+## Running containers locally
+
+To run a container locally with the current built-in `Go` and `Node` version use:
+
+```bash
+podman run --rm -it public.ecr.aws/moia-oss/codebuild-arm64-ubuntu:latest
+```
+
+you can overwrite the default versions and use specific ones by passing the version number as environment variables:
+
+```bash
+podman run --rm -it \
+    -e DEFAULT_GO_VERSION="1.18.3" \
+    -e DEFAULT_NODE_VERSION="14.20.0" \
+    public.ecr.aws/moia-oss/codebuild-arm64-ubuntu:latest
+```
+
 ## Contributing
 
 This project welcomes contributions or suggestions of any kind. Please feel free to create an issue to discuss changes or create a Pull Request if you see room for improvement.
