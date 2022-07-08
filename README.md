@@ -13,13 +13,13 @@ This is a selection of container images preinstalled with `goenv` and `nvm` so t
 
 | Operating System             | Docker Hub Repo                                                                                 | Docker Hub Tags             |
 | ---------------------------- | ----------------------------------------------------------------------------------------------- | --------------------------- |
-| Ubuntu 22.04 (Jammy Jellyfish)   | [public.ecr.aws/moia-oss/codebuild-amd64-ubuntu](.)           | 22.04, jammy, latest        |
+| Ubuntu 22.04 (Jammy Jellyfish)   | [public.ecr.aws/moia-oss/codebuild-amd64-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-amd64-ubuntu)           | 22.04, jammy, latest        |
 
 ### linux/arm64
 
 | Operating System             | Docker Hub Repo                                                                                 | Docker Hub Tags             |
 | ---------------------------- | ----------------------------------------------------------------------------------------------- | --------------------------- |
-| Ubuntu 22.04 (Jammy Jellyfish)   | [public.ecr.aws/moia-oss/codebuild-arm64-ubuntu](.)           | 22.04, jammy, latest        |
+| Ubuntu 22.04 (Jammy Jellyfish)   | [public.ecr.aws/moia-oss/codebuild-arm64-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-arm64-ubuntu)           | 22.04, jammy, latest        |
 
 ## Naming convention
 
