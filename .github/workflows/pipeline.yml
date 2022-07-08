@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         version: [ 'amd64', 'arm64']
-    name: Build on Ubuntu for linux/${{ matrix.version }}
+    name: Build on Ubuntu 22.04 for linux/${{ matrix.version }}
     env:
       os: "ubuntu"
       version: "22.04"
@@ -33,10 +33,12 @@ jobs:
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws-region: eu-central-1
+      
       - name: Login to Amazon ECR
         id: login-ecr
         run: aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/s6w2n1r6
-      - name: Build and push ${{ env.platform }}
+      
+      - name: Build and push
         uses: docker/build-push-action@v3
         with:
           context: ./Dockerfiles/${{ env.os }}/${{ env.version }}
@@ -44,6 +46,6 @@ jobs:
           platforms: ${{ env.platform }}
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            public.ecr.aws/s6w2n1r6/codebuild-${{ env.platform }}-${{ env.os }}:latest
-            public.ecr.aws/s6w2n1r6/codebuild-${{ env.platform }}-${{ env.os }}:${{ env.version }}
-            public.ecr.aws/s6w2n1r6/codebuild-${{ env.platform }}-${{ env.os }}:${{ env.alias }}
+            public.ecr.aws/s6w2n1r6/codebuild-${{ matrix.version }}-${{ env.os }}:latest
+            public.ecr.aws/s6w2n1r6/codebuild-${{ matrix.version }}-${{ env.os }}:${{ env.version }}
+            public.ecr.aws/s6w2n1r6/codebuild-${{ matrix.version }}-${{ env.os }}:${{ env.alias }}
