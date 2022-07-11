@@ -1,36 +1,74 @@
-FROM ubuntu:22.04
+FROM public.ecr.aws/ubuntu/ubuntu:22.04 AS base
+
+ARG DEBIAN_FRONTEND="noninteractive"
 
 LABEL maintainer="MOIA GmbH" \
-  org.label-schema.name="Codebuild Image Ubuntu"
+  org.label-schema.name="Codebuild Image Ubuntu" \
+  org.label-schema.organization="MOIA OSS"
+
+# -----------------------Begin: environment -----------------------
+# Language Version
 
 ENV DEFAULT_GO_VERSION="1.18.3"
-ENV DEFAULT_NODE_VERSION="14.20.0"
+ENV DEFAULT_NODE_VERSION="14"
+
+ENV GO_VERSION=$DEFAULT_GO_VERSION
+ENV NODE_VERSION=$DEFAULT_NODE_VERSION
+
+# OS specific
+ENV LC_CTYPE="C.UTF-8"
 
 COPY entrypoint.sh /build/
 
 WORKDIR /build
 
-# install basic tools
-RUN apt-get -qq update \
+# install base tools and utilities, git, SSH, aws, ...
+# -----------------------Begin: base-setup -----------------------
+RUN set -ex \
+    && apt-get -qq update \
     && apt-get -qq --yes upgrade \
-    && apt-get --yes -qq -o=Dpkg::Use-Pty=0 install python3 pip make zip curl git \ 
+    && apt install -y -qq apt-transport-https gnupg ca-certificates \
+    && apt-get install -y -qq --no-install-recommends software-properties-common openssh-client \
+    && mkdir ~/.ssh \
+    && touch ~/.ssh/known_hosts \
+    && ssh-keyscan -t rsa,dsa -H github.com >> ~/.ssh/known_hosts \
+    && chmod 600 ~/.ssh/known_hosts \
+    && apt-get install -y -qq --no-install-recommends \
+        git make zip curl locales make mlocate python3 pip openssl python3-openssl \ 
     && update-alternatives --install /usr/bin/python python /usr/bin/python3 99 \
-    && pip3 --quiet install awscli awscurl
+    && pip3 --quiet install awscli awscurl \
+    && rm -rf /var/lib/apt/lists/*
 
-# install nvm
-RUN curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash \
-    && . $HOME/.nvm/nvm.sh
+# install language specific runtimes and utilities
+# -----------------------Begin: runtimes -----------------------
+FROM base AS runtimes
 
-# install goenv and go
-ENV GOENV_ROOT $HOME/.goenv
-ENV PATH $GOENV_ROOT/bin:$PATH
+#nodejs
+ARG SRC_DIR="/usr/src"
+ARG N_SRC_DIR="$SRC_DIR/n"
+RUN git clone https://github.com/tj/n $N_SRC_DIR \
+     && cd $N_SRC_DIR && make install \
+     && rm -rf $N_SRC_DIR
 
-RUN git clone --quiet https://github.com/syndbg/goenv.git ~/.goenv \ 
-    && echo 'export GOENV_ROOT="$HOME/.goenv"' >> ~/.bashrc \
-    && echo 'export PATH="$GOENV_ROOT/bin:$PATH"' >> ~/.bashrc \
-    && echo 'eval "$(goenv init -)"' >> ~/.bashrc \
-    && echo 'export PATH="$GOROOT/bin:$PATH"' >> ~/.bashrc \ 
-    && echo 'export PATH="$PATH:$GOPATH/bin"' >> ~/.bashrc
+# go
+RUN git clone https://github.com/syndbg/goenv.git $HOME/.goenv
+ENV PATH="/root/.goenv/shims:/root/.goenv/bin:/go/bin:$PATH"
+ENV GOENV_DISABLE_GOPATH=1
+ENV GOPATH="/go"
+
+# -----------------------Begin: moia codebuild image -----------------------
+FROM runtimes AS moia_codebuild
+
+# pin runtime versions to image defaults
+
+## nodejs
+RUN echo "configuring n to use node version $NODE_VERSION..." \
+    && n $NODE_VERSION
+
+## go
+RUN echo "configuring goenv to use go version $GO_VERSION..." \
+    && goenv install $GO_VERSION \
+    && goenv global $GO_VERSION
 
 ENTRYPOINT ["./entrypoint.sh"]
 
