@@ -44,8 +44,8 @@ you can overwrite the default versions and use specific ones by passing the vers
 
 ```bash
 podman run --rm -it \
-    -e DEFAULT_GO_VERSION="1.18.3" \
-    -e DEFAULT_NODE_VERSION="14.20.0" \
+    -e GO_VERSION="1.18.3" \
+    -e NODE_VERSION="14.20.0" \
     public.ecr.aws/moia-oss/codebuild-arm64-ubuntu:latest
 ```
 
