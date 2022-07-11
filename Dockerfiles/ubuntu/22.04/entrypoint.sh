@@ -4,28 +4,22 @@ set -eu
 
 function setup_go_version {
     echo "configuring goenv to use go version $1..."
-
-    export GOENV_ROOT="$HOME/.goenv"
-    export PATH="$GOENV_ROOT/bin:$PATH"
-    eval "$(goenv init -)"
-
     goenv install $1
     goenv global $1
 }
 
 function setup_node_version {
-    echo "configuring nvm to use node version $1..."
-
-    export NVM_DIR=$HOME/.nvm;
-
-    source $NVM_DIR/nvm.sh;
-    nvm install --no-progress $1
-    nvm alias default $1
-    nvm use default
+    echo "configuring n to use node version $1..."
+    n $NODE_VERSION
 }
 
-setup_go_version $DEFAULT_GO_VERSION
-setup_node_version $DEFAULT_NODE_VERSION
+if [ "$GO_VERSION" != "$DEFAULT_GO_VERSION" ]; then
+    setup_go_version $GO_VERSION
+fi
+
+if [ "$NODE_VERSION" != "$DEFAULT_NODE_VERSION" ]; then
+    setup_node_version $NODE_VERSION
+fi
 
 echo ""
 echo "==============================================="
