@@ -49,6 +49,37 @@ podman run --rm -it \
     public.ecr.aws/moia-oss/codebuild-arm64-ubuntu:latest
 ```
 
+## Examples
+
+Cloudformation Example:
+
+```yaml
+DeploySomething:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: !Sub "deploy-something"
+      ServiceRole: !Ref CodebuildRole
+      TimeoutInMinutes: 360
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_MEDIUM
+        Image: public.ecr.aws/moia-oss/codebuild-amd64-ubuntu:latest
+        Type: LINUX_CONTAINER
+        PrivilegedMode: true
+        EnvironmentVariables:
+          - Name: GO_VERSION
+            Value: "1.18.3"
+          - Name: NODE_VERSION
+            Value: "14.20.0"
+            ...
+    Source:
+        Type: CODEPIPELINE
+        BuildSpec: !Sub |
+          version: 0.2
+          ... 
+```
+
 ## Contributing
 
 This project welcomes contributions or suggestions of any kind. Please feel free to create an issue to discuss changes or create a Pull Request if you see room for improvement.
