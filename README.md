@@ -1,5 +1,7 @@
 # moia-codebuild-container-images
 
+[![pipeline](https://github.com/moia-oss/moia-codebuild-container-images/actions/workflows/pipeline.yml/badge.svg)](https://github.com/moia-oss/moia-codebuild-container-images/actions/workflows/pipeline.yml)
+
 ## Overview
 
 This is a selection of container images preinstalled with `goenv` and `n` so that you can use any version of Go or NPM you want, or even install multiple versions. Container images in this repository are used in AWS Codebuild.
