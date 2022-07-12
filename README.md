@@ -1,7 +1,6 @@
 # moia-codebuild-container-images
 
-![pipeline](https://github.com/moia-oss/moia-codebuild-container-images/actions/workflows/pipeline.yml/badge.svg)](https://github.com/moia-oss/moia-codebuild-container-images/actions/workflows/pipeline.yml)
-
+[![pipeline](https://github.com/moia-oss/moia-codebuild-container-images/actions/workflows/pipeline.yml/badge.svg)](https://github.com/moia-oss/moia-codebuild-container-images/actions/workflows/pipeline.yml)
 
 ## Overview
 
