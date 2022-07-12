@@ -9,7 +9,7 @@ LABEL maintainer="MOIA GmbH" \
 # -----------------------Begin: environment -----------------------
 # Language Version
 
-ENV DEFAULT_GO_VERSION="1.18.3"
+ENV DEFAULT_GO_VERSION="1.18"
 ENV DEFAULT_NODE_VERSION="14"
 
 ENV GO_VERSION=$DEFAULT_GO_VERSION
@@ -18,7 +18,8 @@ ENV NODE_VERSION=$DEFAULT_NODE_VERSION
 # OS specific
 ENV LC_CTYPE="C.UTF-8"
 
-COPY entrypoint.sh /build/
+COPY entrypoint.sh /entrypoint/entrypoint.sh
+COPY ./tools/latest_minor_go_version.sh /usr/local/bin
 
 WORKDIR /build
 
@@ -33,6 +34,7 @@ RUN set -ex \
     && touch ~/.ssh/known_hosts \
     && ssh-keyscan -t rsa,dsa -H github.com >> ~/.ssh/known_hosts \
     && chmod 600 ~/.ssh/known_hosts \
+    && chmod 700 /usr/local/bin/latest_minor_go_version.sh \
     && apt-get install -y -qq --no-install-recommends \
         git make zip curl locales make mlocate python3 pip openssl python3-openssl \ 
     && update-alternatives --install /usr/bin/python python /usr/bin/python3 99 \
@@ -67,9 +69,10 @@ RUN echo "configuring n to use node version $NODE_VERSION..." \
 
 ## go
 RUN echo "configuring goenv to use go version $GO_VERSION..." \
-    && goenv install $GO_VERSION \
-    && goenv global $GO_VERSION
+    && export GO_LATEST_MINOR_VERSION=$(latest_minor_go_version.sh $GO_VERSION) \
+    && goenv install $GO_LATEST_MINOR_VERSION \
+    && goenv global $GO_LATEST_MINOR_VERSION
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/entrypoint/entrypoint.sh"]
 
 CMD ["/bin/bash"]

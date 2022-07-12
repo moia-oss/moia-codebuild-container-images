@@ -4,8 +4,9 @@ set -eu
 
 function setup_go_version {
     echo "configuring goenv to use go version $1..."
-    goenv install $1
-    goenv global $1
+    GO_LATEST_MINOR_VERSION=$(latest_minor_go_version.sh $GO_VERSION)
+    goenv install $GO_LATEST_MINOR_VERSION
+    goenv global $GO_LATEST_MINOR_VERSION
 }
 
 function setup_node_version {
