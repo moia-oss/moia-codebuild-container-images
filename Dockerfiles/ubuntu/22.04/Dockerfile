@@ -10,7 +10,7 @@ LABEL maintainer="MOIA GmbH" \
 # Language Version
 
 ENV DEFAULT_GO_VERSION="1.18"
-ENV DEFAULT_NODEJS_VERSION="14"
+ENV DEFAULT_NODEJS_VERSION="16"
 
 ENV GO_VERSION=$DEFAULT_GO_VERSION
 ENV NODEJS_VERSION=$DEFAULT_NODEJS_VERSION
@@ -38,7 +38,7 @@ RUN set -ex \
     && apt-get install -y -qq --no-install-recommends \
         git make zip curl locales make mlocate python3 pip openssl python3-openssl \ 
     && update-alternatives --install /usr/bin/python python /usr/bin/python3 99 \
-    && pip3 --quiet install awscliv2 awscurl \
+    && pip3 --quiet install  git+https://github.com/aws/aws-cli.git@v2 awscurl \
     && rm -rf /var/lib/apt/lists/*
 
 # install language specific runtimes and utilities
@@ -65,7 +65,8 @@ FROM runtimes AS moia_codebuild
 
 ## nodejs
 RUN echo "configuring n to use node version $NODEJS_VERSION..." \
-    && n $NODEJS_VERSION
+    && n $NODEJS_VERSION \
+    && npm install -g aws-cdk
 
 ## go
 RUN echo "configuring goenv to use go version $GO_VERSION..." \

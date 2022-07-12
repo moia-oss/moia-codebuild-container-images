@@ -28,6 +28,7 @@ echo "go version: $(go version)"
 echo "nodejs version: $(node -v)"
 echo "npm version: $(npm -v)"
 echo "aws-cli version: $(aws --version)"
+echo "aws-cdk version:" $(cdk --version)
 echo "python3 version: $(python3 --version)"
 echo "==============================================="
 echo ""
