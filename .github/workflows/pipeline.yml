@@ -12,10 +12,7 @@ on:
 jobs:
   ubuntu-jammy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        architecture: [ 'amd64', 'arm64']
-    name: Build on Ubuntu 22.04 for linux/${{ matrix.architecture }}
+    name: Build on Ubuntu 22.04
     env:
       os: "ubuntu"
       version: "22.04"
@@ -42,9 +39,9 @@ jobs:
         with:
           context: ./Dockerfiles/${{ env.os }}/${{ env.version }}
           file: ./Dockerfiles/${{ env.os }}/${{ env.version }}/Dockerfile
-          platforms: "linux/${{ matrix.architecture }}"
+          platforms: "linux/amd64,linux/arm64"
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            public.ecr.aws/s6w2n1r6/codebuild-${{ matrix.architecture }}-${{ env.os }}:latest
-            public.ecr.aws/s6w2n1r6/codebuild-${{ matrix.architecture }}-${{ env.os }}:${{ env.version }}
-            public.ecr.aws/s6w2n1r6/codebuild-${{ matrix.architecture }}-${{ env.os }}:${{ env.alias }}
+            public.ecr.aws/s6w2n1r6/codebuild-${{ env.os }}:latest
+            public.ecr.aws/s6w2n1r6/codebuild-${{ env.os }}:${{ env.version }}
+            public.ecr.aws/s6w2n1r6/codebuild-${{ env.os }}:${{ env.alias }}
