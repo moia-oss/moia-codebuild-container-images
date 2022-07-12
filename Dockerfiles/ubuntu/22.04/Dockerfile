@@ -38,7 +38,7 @@ RUN set -ex \
     && apt-get install -y -qq --no-install-recommends \
         git make zip curl locales make mlocate python3 pip openssl python3-openssl \ 
     && update-alternatives --install /usr/bin/python python /usr/bin/python3 99 \
-    && pip3 --quiet install awscli awscurl \
+    && pip3 --quiet install awscliv2 awscurl \
     && rm -rf /var/lib/apt/lists/*
 
 # install language specific runtimes and utilities
