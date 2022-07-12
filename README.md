@@ -45,7 +45,7 @@ you can overwrite the default versions and use specific ones by passing the vers
 ```bash
 podman run --rm -it \
     -e GO_VERSION="1.18" \
-    -e NODE_VERSION="14" \
+    -e NODEJS_VERSION="14" \
     public.ecr.aws/moia-oss/codebuild-arm64-ubuntu:latest
 ```
 
@@ -70,7 +70,7 @@ DeploySomething:
         EnvironmentVariables:
           - Name: GO_VERSION
             Value: "1.18"
-          - Name: NODE_VERSION
+          - Name: NODEJS_VERSION
             Value: "14"
             ...
     Source:
