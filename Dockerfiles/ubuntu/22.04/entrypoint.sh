@@ -11,21 +11,21 @@ function setup_go_version {
 
 function setup_node_version {
     echo "configuring n to use node version $1..."
-    n $NODE_VERSION
+    n $NODEJS_VERSION
 }
 
 if [ "$GO_VERSION" != "$DEFAULT_GO_VERSION" ]; then
     setup_go_version $GO_VERSION
 fi
 
-if [ "$NODE_VERSION" != "$DEFAULT_NODE_VERSION" ]; then
-    setup_node_version $NODE_VERSION
+if [ "$NODEJS_VERSION" != "$DEFAULT_NODEJS_VERSION" ]; then
+    setup_node_version $NODEJS_VERSION
 fi
 
 echo ""
 echo "==============================================="
 echo "go version: $(go version)"
-echo "node version: $(node -v)"
+echo "nodejs version: $(node -v)"
 echo "npm version: $(npm -v)"
 echo "aws-cli version: $(aws --version)"
 echo "python3 version: $(python3 --version)"

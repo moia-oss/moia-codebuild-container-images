@@ -10,10 +10,10 @@ LABEL maintainer="MOIA GmbH" \
 # Language Version
 
 ENV DEFAULT_GO_VERSION="1.18"
-ENV DEFAULT_NODE_VERSION="14"
+ENV DEFAULT_NODEJS_VERSION="14"
 
 ENV GO_VERSION=$DEFAULT_GO_VERSION
-ENV NODE_VERSION=$DEFAULT_NODE_VERSION
+ENV NODEJS_VERSION=$DEFAULT_NODEJS_VERSION
 
 # OS specific
 ENV LC_CTYPE="C.UTF-8"
@@ -64,8 +64,8 @@ FROM runtimes AS moia_codebuild
 # pin runtime versions to image defaults
 
 ## nodejs
-RUN echo "configuring n to use node version $NODE_VERSION..." \
-    && n $NODE_VERSION
+RUN echo "configuring n to use node version $NODEJS_VERSION..." \
+    && n $NODEJS_VERSION
 
 ## go
 RUN echo "configuring goenv to use go version $GO_VERSION..." \
