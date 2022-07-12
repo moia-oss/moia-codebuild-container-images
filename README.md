@@ -1,5 +1,8 @@
 # moia-codebuild-container-images
 
+![pipeline](https://github.com/moia-oss/moia-codebuild-container-images/actions/workflows/pipeline.yml/badge.svg)](https://github.com/moia-oss/moia-codebuild-container-images/actions/workflows/pipeline.yml)
+
+
 ## Overview
 
 This is a selection of container images preinstalled with `goenv` and `n` so that you can use any version of Go or NPM you want, or even install multiple versions. Container images in this repository are used in AWS Codebuild.
@@ -13,28 +16,27 @@ This is a selection of container images preinstalled with `goenv` and `n` so tha
 
 | Operating System             | Public ECR Repo                                                                                 | Tags             |
 | ---------------------------- | ----------------------------------------------------------------------------------------------- | --------------------------- |
-| Ubuntu 22.04 (Jammy Jellyfish)   | [public.ecr.aws/moia-oss/codebuild-amd64-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-amd64-ubuntu)           | 22.04, jammy, latest        |
+| Ubuntu 22.04 (Jammy Jellyfish)   | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu)           | 22.04, jammy, latest        |
 
 ### linux/arm64
 
 | Operating System             | Public ECR Repo                                                                                 | Tags             |
 | ---------------------------- | ----------------------------------------------------------------------------------------------- | --------------------------- |
-| Ubuntu 22.04 (Jammy Jellyfish)   | [public.ecr.aws/moia-oss/codebuild-arm64-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-arm64-ubuntu)           | 22.04, jammy, latest        |
+| Ubuntu 22.04 (Jammy Jellyfish)   | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu)           | 22.04, jammy, latest        |
 
 ## Naming convention
 
 Images follow the naming convention as described below:
 
-`public.ecr.aws/moia-oss/codebuild-<platform>-<os>:<version>`
+`public.ecr.aws/moia-oss/codebuild-<os>:<version>`
 
 where 
-* `platform` is the system architecture e.g. `amd64`
 * `os` is the operation system name e.g. `ubuntu`
 * `version` is the container image tag e.g. `latest`
 
 ## Running containers locally
 
-To run a container locally with the current built-in `Go` and `Node` version use:
+To run a container locally with the current built-in `Go` and `NodeJS` version use:
 
 ```bash
 podman run --rm -it public.ecr.aws/moia-oss/codebuild-arm64-ubuntu:latest
