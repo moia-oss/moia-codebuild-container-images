@@ -38,7 +38,7 @@ where
 To run a container locally with the current built-in `Go` and `NodeJS` version use:
 
 ```bash
-podman run --rm -it public.ecr.aws/moia-oss/codebuild-arm64-ubuntu:latest
+podman run --rm -it public.ecr.aws/moia-oss/codebuild-ubuntu:latest
 ```
 
 you can overwrite the default versions and use specific ones by passing the version number as environment variables:
@@ -47,7 +47,7 @@ you can overwrite the default versions and use specific ones by passing the vers
 podman run --rm -it \
     -e GO_VERSION="1.18" \
     -e NODEJS_VERSION="14" \
-    public.ecr.aws/moia-oss/codebuild-arm64-ubuntu:latest
+    public.ecr.aws/moia-oss/codebuild-ubuntu:latest
 ```
 
 ## Examples
@@ -65,7 +65,7 @@ DeploySomething:
         Type: CODEPIPELINE
       Environment:
         ComputeType: BUILD_GENERAL1_MEDIUM
-        Image: public.ecr.aws/moia-oss/codebuild-amd64-ubuntu:latest
+        Image: public.ecr.aws/moia-oss/codebuild-ubuntu:latest
         Type: LINUX_CONTAINER
         PrivilegedMode: true
         EnvironmentVariables:
