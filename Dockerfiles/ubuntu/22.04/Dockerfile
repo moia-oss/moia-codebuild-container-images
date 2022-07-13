@@ -36,7 +36,7 @@ RUN set -ex \
     && chmod 600 ~/.ssh/known_hosts \
     && chmod 700 /usr/local/bin/latest_minor_go_version.sh \
     && apt-get install -y -qq --no-install-recommends \
-        git make zip curl locales make mlocate python3 pip openssl python3-openssl \ 
+        git make zip curl locales jq mlocate python3 pip openssl python3-openssl \ 
     && update-alternatives --install /usr/bin/python python /usr/bin/python3 99 \
     && pip3 --quiet install awscliv2 awscurl \
     && awscliv2 --install \
