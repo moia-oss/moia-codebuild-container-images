@@ -81,6 +81,46 @@ DeploySomething:
           ... 
 ```
 
+CDK TypeScript example:
+
+```typescript
+
+const sourceOutput = new codepipeline.Artifact();
+const moiaBuildImageId = 'public.ecr.aws/moia-oss/codebuild-ubuntu:latest';
+
+new codepipeline.Pipeline(this, 'my-pipeline-id', {
+      pipelineName: 'my-pipeline',
+      stages: [
+        {stageName: 'ApplicationSource',
+        actions: [
+            new actions.CodeStarConnectionsSourceAction({
+              actionName: "Source",
+              output: sourceOutput,
+              owner: "moia-oss",
+              connectionArn: 'arn',
+              repo: 'my-repo',
+              branch: 'main'
+            })
+        ]},
+          {
+            stageName: 'ApplicationBuild',
+            actions: [
+                new actions.CodeBuildAction({
+                  actionName: 'Build',
+                  input: sourceOutput,
+                  project: new codebuild.Project(this, 'my-codebuild-project', {
+                    buildSpec: codebuild.BuildSpec.fromSourceFilename('./infrastructure/buildspec-codepipeline.yml'),
+                    environment: { // use LinuxBuildImage if ARM is unwanted
+                      buildImage: codebuild.LinuxArmBuildImage.fromCodeBuildImageId(moiaBuildImageId),
+                    },
+                  })
+                })
+            ]
+          }
+      ],
+    });
+```
+
 ## Contributing
 
 This project welcomes contributions or suggestions of any kind. Please feel free to create an issue to discuss changes or create a Pull Request if you see room for improvement.
