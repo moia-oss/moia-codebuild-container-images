@@ -88,47 +88,55 @@ CDK TypeScript example:
 const sourceOutput = new codepipeline.Artifact();
 const moiaBuildImageId = 'public.ecr.aws/moia-oss/codebuild-ubuntu:latest';
 
-new codepipeline.Pipeline(this, 'my-pipeline-id', {
-      pipelineName: 'my-pipeline',
-      stages: [
-        {stageName: 'ApplicationSource',
-        actions: [
-            new actions.CodeStarConnectionsSourceAction({
-              actionName: "Source",
-              output: sourceOutput,
-              owner: "moia-oss",
-              connectionArn: 'arn',
-              repo: 'my-repo',
-              branch: 'main'
-            })
-        ]},
-          {
-            stageName: 'ApplicationBuild',
+new codepipeline.Pipeline(this, "my-pipeline-id", {
+    pipelineName: "my-pipeline",
+    stages: [
+        {
+            stageName: "ApplicationSource",
+            actions: [
+                new actions.CodeStarConnectionsSourceAction({
+                    actionName: "Source",
+                    output: sourceOutput,
+                    owner: "moia-oss",
+                    connectionArn: "arn",
+                    repo: "my-repo",
+                    branch: "main",
+                }),
+            ],
+        },
+        {
+            stageName: "ApplicationBuild",
             actions: [
                 new actions.CodeBuildAction({
-                  actionName: 'Build',
-                  input: sourceOutput,
-                  project: new codebuild.Project(this, 'my-codebuild-project', {
-                    buildSpec: codebuild.BuildSpec.fromSourceFilename('./infrastructure/buildspec-codepipeline.yml'),
-                    environment: { // use LinuxBuildImage if ARM is unwanted
-                      buildImage: codebuild.LinuxArmBuildImage.fromCodeBuildImageId(moiaBuildImageId),
-                      environmentVariables: {
-                          NODEJS_VERSION: {
-                            type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,
-                            value: '14',
+                    actionName: "Build",
+                    input: sourceOutput,
+                    project: new codebuild.Project(this, "my-codebuild-project", {
+                        buildSpec: codebuild.BuildSpec.fromSourceFilename(
+                            "./infrastructure/buildspec-codepipeline.yml"
+                        ),
+                        environment: {
+                            // use LinuxBuildImage if ARM is unwanted
+                            buildImage:
+                                codebuild.LinuxArmBuildImage.fromCodeBuildImageId(
+                                    moiaBuildImageId
+                                ),
+                            environmentVariables: {
+                                NODEJS_VERSION: {
+                                    type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,
+                                    value: "14",
+                                },
+                                GO_VERSION: {
+                                    type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,
+                                    value: "1.18",
+                                },
                             },
-                          GO_VERSION: {
-                            type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,
-                            value: '1.18',
-                            },
-                      },
-                    },
-                  })
-                })
-            ]
-          }
-      ],
-    });
+                        },
+                    }),
+                }),
+            ],
+        },
+    ],
+});
 ```
 
 ## Contributing
