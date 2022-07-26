@@ -8,7 +8,7 @@ This is a selection of container images preinstalled with `goenv` and `n` so tha
 
 ## Supported Operating Systems
 
-> Container images are automatically rebuilt and published to public ECR repositories daily (8AM)
+> Container images are automatically rebuilt and published to public ECR repositories weekly (8AM UTC)
 
 
 ### linux/amd64
