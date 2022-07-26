@@ -112,6 +112,16 @@ new codepipeline.Pipeline(this, 'my-pipeline-id', {
                     buildSpec: codebuild.BuildSpec.fromSourceFilename('./infrastructure/buildspec-codepipeline.yml'),
                     environment: { // use LinuxBuildImage if ARM is unwanted
                       buildImage: codebuild.LinuxArmBuildImage.fromCodeBuildImageId(moiaBuildImageId),
+                      environmentVariables: {
+                          NODEJS_VERSION: {
+                            type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,
+                            value: '14',
+                            },
+                          GO_VERSION: {
+                            type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,
+                            value: '1.18',
+                            },
+                      },
                     },
                   })
                 })
