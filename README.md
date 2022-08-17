@@ -86,7 +86,11 @@ DeploySomething:
         Type: CODEPIPELINE
         BuildSpec: !Sub |
           version: 0.2
-          ... 
+          phases:
+            build:
+              commands:
+                - /entrypoint/entrypoint.sh
+                ... 
 ```
 
 CDK TypeScript example:
