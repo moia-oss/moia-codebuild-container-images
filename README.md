@@ -50,6 +50,14 @@ podman run --rm -it \
     public.ecr.aws/moia-oss/codebuild-ubuntu:latest
 ```
 
+### Codebuild
+
+AWS Codebuild overrides the `ENTRYPOINT` defined by the dockerfile. This means if you want to use a non-default version
+for any language you need to set them yourself. This can be easily done by running the included 
+`/entrypoint/entrypoint.sh` script, which will respect the environment variables mentioned above.
+
+Alternatively you could call `goenv` and `n` yourself directly.
+
 ## Examples
 
 Cloudformation Example:
