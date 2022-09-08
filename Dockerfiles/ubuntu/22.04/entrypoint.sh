@@ -22,6 +22,19 @@ if [ "$NODEJS_VERSION" != "$DEFAULT_NODEJS_VERSION" ]; then
     setup_node_version $NODEJS_VERSION
 fi
 
+# using JAVA_VERSION- means that a substitution takes place which sets the value of JAVA_VERSION to empty string if unset
+# this is necessary because the -u option stops us from using unset variables
+if [ -z "${JAVA_VERSION-}" ]; then
+    export JAVA_VERSION="${DEFAULT_JAVA_VERSION}"
+fi
+
+if [ "$JAVA_VERSION" != "$DEFAULT_JAVA_VERSION" ]; then
+    java_dir="/usr/lib/jvm/java-${JAVA_VERSION}-amazon-corretto"
+
+    apt-get install -qq -y "java-${JAVA_VERSION}-amazon-corretto-jdk"
+    update-alternatives --set java "${java_dir}/bin/java"
+fi
+
 echo ""
 echo "==============================================="
 echo "go version: $(go version)"
@@ -30,6 +43,7 @@ echo "npm version: $(npm -v)"
 echo "aws-cli version: $(aws --version)"
 echo "aws-cdk version:" "$(cdk --version)"
 echo "python3 version: $(python3 --version)"
+echo "java version: $(java --version)"
 echo "==============================================="
 echo ""
 
