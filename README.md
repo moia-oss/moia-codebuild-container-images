@@ -25,12 +25,11 @@ This is a selection of container images preinstalled with `goenv` and `n` so tha
 
 ## Supported Programming Languages / Runtimes
 
-| Platform | Major Versions   | Environment Variable | Default Version |
-|----------|------------------|----------------------|-----------------|
-| Go       | 1.17, 1.18, 1.19 | `GO_VERSION`         | 1.18            |
-| NodeJS   | 14, 16           | `NODEJS_VERSION`     | 14              |
-| Java     | 11, 17           | `JAVA_VERSION`       | 11              |
-
+| Platform                        | Major Versions   | Environment Variable | Default Version |
+|---------------------------------|------------------|----------------------|-----------------|
+| Go                              | 1.17, 1.18, 1.19 | `GO_VERSION`         | 1.18            |
+| NodeJS                          | 14, 16           | `NODEJS_VERSION`     | 14              |
+| Java Development Kit (Corretto) | 11, 17           | `JAVA_VERSION`       | 11              |
 
 ### Deprecation Policy
 
