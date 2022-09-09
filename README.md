@@ -23,6 +23,28 @@ This is a selection of container images preinstalled with `goenv` and `n` so tha
 | ---------------------------- | ----------------------------------------------------------------------------------------------- | --------------------------- |
 | Ubuntu 22.04 (Jammy Jellyfish)   | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu)           | 22.04, jammy, latest        |
 
+## Supported Programming Languages / Runtimes
+
+| Platform                        | Major Versions   | Environment Variable | Default Version |
+|---------------------------------|------------------|----------------------|-----------------|
+| Go                              | 1.17, 1.18, 1.19 | `GO_VERSION`         | 1.18            |
+| NodeJS                          | 14, 16           | `NODEJS_VERSION`     | 14              |
+| Java Development Kit (Corretto) | 11, 17           | `JAVA_VERSION`       | 11              |
+
+### Deprecation Policy
+
+Major versions will be removed without further warning once they have stopped retrieving upstream security updates.
+
+Note that this is fairly aggressive in the case of Go as major versions are only supported for around one year
+after release.
+
+### Default Version Selection Policy
+
+We recommend that you pin major versions manually. Default versions will be selected judicially taking into account
+
+- Lambda runtime availability
+- Maturity of release
+
 ## Naming convention
 
 Images follow the naming convention as described below:

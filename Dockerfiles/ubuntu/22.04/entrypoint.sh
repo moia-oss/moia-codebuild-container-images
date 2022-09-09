@@ -22,12 +22,6 @@ if [ "$NODEJS_VERSION" != "$DEFAULT_NODEJS_VERSION" ]; then
     setup_node_version $NODEJS_VERSION
 fi
 
-# using JAVA_VERSION- means that a substitution takes place which sets the value of JAVA_VERSION to empty string if unset
-# this is necessary because the -u option stops us from using unset variables
-if [ -z "${JAVA_VERSION-}" ]; then
-    export JAVA_VERSION="${DEFAULT_JAVA_VERSION}"
-fi
-
 if [ "$JAVA_VERSION" != "$DEFAULT_JAVA_VERSION" ]; then
     java_dir="/usr/lib/jvm/java-${JAVA_VERSION}-amazon-corretto"
 
