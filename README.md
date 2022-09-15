@@ -10,23 +10,22 @@ This is a selection of container images preinstalled with `goenv` and `n` so tha
 
 > Container images are automatically rebuilt and published to public ECR repositories weekly (8AM UTC)
 
-
 ### linux/amd64
 
-| Operating System             | Public ECR Repo                                                                                 | Tags             |
-| ---------------------------- | ----------------------------------------------------------------------------------------------- | --------------------------- |
-| Ubuntu 22.04 (Jammy Jellyfish)   | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu)           | 22.04, jammy, latest        |
+| Operating System               | Public ECR Repo                                                                               | Tags                 |
+| ------------------------------ | --------------------------------------------------------------------------------------------- | -------------------- |
+| Ubuntu 22.04 (Jammy Jellyfish) | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu) | 22.04, jammy, latest |
 
 ### linux/arm64
 
-| Operating System             | Public ECR Repo                                                                                 | Tags             |
-| ---------------------------- | ----------------------------------------------------------------------------------------------- | --------------------------- |
-| Ubuntu 22.04 (Jammy Jellyfish)   | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu)           | 22.04, jammy, latest        |
+| Operating System               | Public ECR Repo                                                                               | Tags                 |
+| ------------------------------ | --------------------------------------------------------------------------------------------- | -------------------- |
+| Ubuntu 22.04 (Jammy Jellyfish) | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu) | 22.04, jammy, latest |
 
 ## Supported Programming Languages / Runtimes
 
 | Platform                        | Major Versions   | Environment Variable | Default Version |
-|---------------------------------|------------------|----------------------|-----------------|
+| ------------------------------- | ---------------- | -------------------- | --------------- |
 | Go                              | 1.17, 1.18, 1.19 | `GO_VERSION`         | 1.18            |
 | NodeJS                          | 14, 16           | `NODEJS_VERSION`     | 14              |
 | Java Development Kit (Corretto) | 11, 17           | `JAVA_VERSION`       | 11              |
@@ -51,9 +50,10 @@ Images follow the naming convention as described below:
 
 `public.ecr.aws/moia-oss/codebuild-<os>:<version>`
 
-where 
-* `os` is the operation system name e.g. `ubuntu`
-* `version` is the container image tag e.g. `latest`
+where
+
+- `os` is the operation system name e.g. `ubuntu`
+- `version` is the container image tag e.g. `latest`
 
 ## Running containers locally
 
@@ -75,7 +75,7 @@ podman run --rm -it \
 ### Codebuild
 
 AWS Codebuild overrides the `ENTRYPOINT` defined by the dockerfile. This means if you want to use a non-default version
-for any language you need to set them yourself. This can be easily done by running the included 
+for any language you need to set them yourself. This can be easily done by running the included
 `/entrypoint/entrypoint.sh` script, which will respect the environment variables mentioned above.
 
 Alternatively you could call `goenv` and `n` yourself directly.
@@ -112,64 +112,58 @@ DeploySomething:
             build:
               commands:
                 - /entrypoint/entrypoint.sh
-                ... 
+                ...
 ```
 
 CDK TypeScript example:
 
 ```typescript
-
 const sourceOutput = new codepipeline.Artifact();
 const moiaBuildImageId = 'public.ecr.aws/moia-oss/codebuild-ubuntu:latest';
 
-new codepipeline.Pipeline(this, "my-pipeline-id", {
-    pipelineName: "my-pipeline",
-    stages: [
-        {
-            stageName: "ApplicationSource",
-            actions: [
-                new actions.CodeStarConnectionsSourceAction({
-                    actionName: "Source",
-                    output: sourceOutput,
-                    owner: "moia-oss",
-                    connectionArn: "arn",
-                    repo: "my-repo",
-                    branch: "main",
-                }),
-            ],
-        },
-        {
-            stageName: "ApplicationBuild",
-            actions: [
-                new actions.CodeBuildAction({
-                    actionName: "Build",
-                    input: sourceOutput,
-                    project: new codebuild.Project(this, "my-codebuild-project", {
-                        buildSpec: codebuild.BuildSpec.fromSourceFilename(
-                            "./infrastructure/buildspec-codepipeline.yml"
-                        ),
-                        environment: {
-                            // use LinuxBuildImage if ARM is unwanted
-                            buildImage:
-                                codebuild.LinuxArmBuildImage.fromCodeBuildImageId(
-                                    moiaBuildImageId
-                                ),
-                            environmentVariables: {
-                                NODEJS_VERSION: {
-                                    type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,
-                                    value: "14",
-                                },
-                                GO_VERSION: {
-                                    type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,
-                                    value: "1.18",
-                                },
-                            },
-                        },
-                    }),
-                }),
-            ],
-        },
-    ],
+new codepipeline.Pipeline(this, 'my-pipeline-id', {
+  pipelineName: 'my-pipeline',
+  stages: [
+    {
+      stageName: 'ApplicationSource',
+      actions: [
+        new actions.CodeStarConnectionsSourceAction({
+          actionName: 'Source',
+          output: sourceOutput,
+          owner: 'moia-oss',
+          connectionArn: 'arn',
+          repo: 'my-repo',
+          branch: 'main',
+        }),
+      ],
+    },
+    {
+      stageName: 'ApplicationBuild',
+      actions: [
+        new actions.CodeBuildAction({
+          actionName: 'Build',
+          input: sourceOutput,
+          project: new codebuild.Project(this, 'my-codebuild-project', {
+            buildSpec: codebuild.BuildSpec.fromSourceFilename('./infrastructure/buildspec-codepipeline.yml'),
+            environment: {
+              // use LinuxBuildImage if ARM is unwanted
+              buildImage: codebuild.LinuxArmBuildImage.fromCodeBuildImageId(moiaBuildImageId),
+              environmentVariables: {
+                NODEJS_VERSION: {
+                  type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,
+                  value: '14',
+                },
+                GO_VERSION: {
+                  type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,
+                  value: '1.18',
+                },
+              },
+            },
+          }),
+        }),
+      ],
+    },
+  ],
 });
 ```
 
