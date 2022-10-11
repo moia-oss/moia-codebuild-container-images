@@ -3,8 +3,8 @@ FROM public.ecr.aws/ubuntu/ubuntu:22.04 AS base
 ARG DEBIAN_FRONTEND="noninteractive"
 
 LABEL maintainer="MOIA GmbH" \
-  org.label-schema.name="Codebuild Image Ubuntu" \
-  org.label-schema.organization="MOIA OSS"
+	org.label-schema.name="Codebuild Image Ubuntu" \
+	org.label-schema.organization="MOIA OSS"
 
 # -----------------------Begin: environment -----------------------
 # Language Version
@@ -28,22 +28,22 @@ WORKDIR /build
 # install base tools and utilities, git, SSH, aws, ...
 # -----------------------Begin: base-setup -----------------------
 RUN set -ex \
-    && apt-get -qq update \
-    && apt-get -qq --yes upgrade \
-    && apt-get install -y -qq apt-transport-https gnupg ca-certificates \
-    && apt-get install -y -qq --no-install-recommends software-properties-common openssh-client \
-    && mkdir ~/.ssh \
-    && touch ~/.ssh/known_hosts \
-    && ssh-keyscan -t rsa,dsa -H github.com >> ~/.ssh/known_hosts \
-    && chmod 600 ~/.ssh/known_hosts \
-    && chmod 700 /usr/local/bin/latest_minor_go_version.sh \
-    && apt-get install -y -qq --no-install-recommends \
-        git make zip curl locales jq mlocate python3 pip openssl python3-openssl \
-    && update-alternatives --install /usr/bin/python python /usr/bin/python3 99 \
-    && pip3 --quiet install awscliv2 awscurl \
-    && awscliv2 --install \
-    && ln -s $HOME/.awscliv2/binaries/aws /usr/local/bin/aws \
-    && rm -rf /var/lib/apt/lists/*
+	&& apt-get -qq update \
+	&& apt-get -qq --yes upgrade \
+	&& apt-get install -y -qq apt-transport-https gnupg ca-certificates \
+	&& apt-get install -y -qq --no-install-recommends software-properties-common openssh-client \
+	&& mkdir ~/.ssh \
+	&& touch ~/.ssh/known_hosts \
+	&& ssh-keyscan -t rsa,dsa -H github.com >> ~/.ssh/known_hosts \
+	&& chmod 600 ~/.ssh/known_hosts \
+	&& chmod 700 /usr/local/bin/latest_minor_go_version.sh \
+	&& apt-get install -y -qq --no-install-recommends \
+	git make zip curl locales jq mlocate python3 pip openssl python3-openssl \
+	&& update-alternatives --install /usr/bin/python python /usr/bin/python3 99 \
+	&& pip3 --quiet install awscliv2 awscurl \
+	&& awscliv2 --install \
+	&& ln -s $HOME/.awscliv2/binaries/aws /usr/local/bin/aws \
+	&& rm -rf /var/lib/apt/lists/*
 
 # install language specific runtimes and utilities
 # -----------------------Begin: runtimes -----------------------
@@ -53,8 +53,8 @@ FROM base AS runtimes
 ARG SRC_DIR="/usr/src"
 ARG N_SRC_DIR="$SRC_DIR/n"
 RUN git clone https://github.com/tj/n $N_SRC_DIR \
-     && cd $N_SRC_DIR && make install \
-     && rm -rf $N_SRC_DIR
+	&& cd $N_SRC_DIR && make install \
+	&& rm -rf $N_SRC_DIR
 
 # go
 RUN git clone https://github.com/syndbg/goenv.git $HOME/.goenv
@@ -64,10 +64,10 @@ ENV GOPATH="/go"
 
 # java (corretto)
 RUN  curl --silent --output /tmp/corretto.key https://apt.corretto.aws/corretto.key \
-     && apt-key add /tmp/corretto.key \
-     && echo "deb https://apt.corretto.aws stable main" > /etc/apt/sources.list.d/java.list \
-     && apt-get update \
-     && apt-get install -y java-${DEFAULT_JAVA_VERSION}-amazon-corretto-jdk
+	&& apt-key add /tmp/corretto.key \
+	&& echo "deb https://apt.corretto.aws stable main" > /etc/apt/sources.list.d/java.list \
+	&& apt-get update \
+	&& apt-get install -y java-${DEFAULT_JAVA_VERSION}-amazon-corretto-jdk
 
 # -----------------------Begin: moia codebuild image -----------------------
 FROM runtimes AS moia_codebuild
@@ -76,14 +76,14 @@ FROM runtimes AS moia_codebuild
 
 ## nodejs
 RUN echo "configuring n to use node version $NODEJS_VERSION..." \
-    && n $NODEJS_VERSION \
-    && npm install -g aws-cdk
+	&& n $NODEJS_VERSION \
+	&& npm install -g aws-cdk
 
 ## go
 RUN echo "configuring goenv to use go version $GO_VERSION..." \
-    && export GO_LATEST_MINOR_VERSION=$(latest_minor_go_version.sh $GO_VERSION) \
-    && goenv install $GO_LATEST_MINOR_VERSION \
-    && goenv global $GO_LATEST_MINOR_VERSION
+	&& export GO_LATEST_MINOR_VERSION=$(latest_minor_go_version.sh $GO_VERSION) \
+	&& goenv install $GO_LATEST_MINOR_VERSION \
+	&& goenv global $GO_LATEST_MINOR_VERSION
 
 ENTRYPOINT ["/entrypoint/entrypoint.sh"]
 
