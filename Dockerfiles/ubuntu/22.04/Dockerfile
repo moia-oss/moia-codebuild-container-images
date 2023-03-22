@@ -9,7 +9,7 @@ LABEL maintainer="MOIA GmbH" \
 # -----------------------Begin: environment -----------------------
 # Language Version
 
-ENV DEFAULT_GO_VERSION="1.18"
+ENV DEFAULT_GO_VERSION="1.19"
 ENV DEFAULT_NODEJS_VERSION="16"
 ENV DEFAULT_JAVA_VERSION="11"
 
