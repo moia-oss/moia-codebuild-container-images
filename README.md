@@ -26,7 +26,7 @@ This is a selection of container images preinstalled with `goenv` and `n` so tha
 
 | Platform                        | Major Versions   | Environment Variable | Default Version |
 | ------------------------------- | ---------------- | -------------------- | --------------- |
-| Go                              | 1.18, 1.19, 1.20 | `GO_VERSION`         | 1.19            |
+| Go                              | 1.19, 1.20, 1.21 | `GO_VERSION`         | 1.20            |
 | NodeJS                          | 14, 16           | `NODEJS_VERSION`     | 14              |
 | Java Development Kit (Corretto) | 11, 17           | `JAVA_VERSION`       | 11              |
 
@@ -67,7 +67,7 @@ you can overwrite the default versions and use specific ones by passing the vers
 
 ```bash
 podman run --rm -it \
-    -e GO_VERSION="1.20" \
+    -e GO_VERSION="1.21" \
     -e NODEJS_VERSION="14" \
     public.ecr.aws/moia-oss/codebuild-ubuntu:latest
 ```
@@ -100,7 +100,7 @@ DeploySomething:
         PrivilegedMode: true
         EnvironmentVariables:
           - Name: GO_VERSION
-            Value: "1.20"
+            Value: "1.21"
           - Name: NODEJS_VERSION
             Value: "14"
             ...
@@ -155,7 +155,7 @@ new codepipeline.Pipeline(this, 'my-pipeline-id', {
                 },
                 GO_VERSION: {
                   type: codebuild.BuildEnvironmentVariableType.PLAINTEXT,
-                  value: '1.20',
+                  value: '1.21',
                 },
               },
             },
