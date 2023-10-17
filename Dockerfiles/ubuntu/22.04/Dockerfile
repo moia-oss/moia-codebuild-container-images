@@ -67,7 +67,7 @@ RUN  curl --silent --output /tmp/corretto.key https://apt.corretto.aws/corretto.
 	&& apt-key add /tmp/corretto.key \
 	&& echo "deb https://apt.corretto.aws stable main" > /etc/apt/sources.list.d/java.list \
 	&& apt-get update \
-	&& apt-get install -y java-${DEFAULT_JAVA_VERSION}-amazon-corretto-jdk
+	&& apt-get install -y java-${JAVA_VERSION}-amazon-corretto-jdk
 
 # -----------------------Begin: moia codebuild image -----------------------
 FROM runtimes AS moia_codebuild
