@@ -9,8 +9,8 @@ LABEL maintainer="MOIA GmbH" \
 # -----------------------Begin: environment -----------------------
 # Language Version
 
-ENV DEFAULT_GO_VERSION="1.21"
-ENV DEFAULT_NODEJS_VERSION="16"
+ENV DEFAULT_GO_VERSION="1.22"
+ENV DEFAULT_NODEJS_VERSION="20"
 ENV DEFAULT_JAVA_VERSION="11"
 
 ENV GO_VERSION=$DEFAULT_GO_VERSION
