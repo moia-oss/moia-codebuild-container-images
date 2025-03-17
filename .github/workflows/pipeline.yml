@@ -21,7 +21,7 @@ jobs:
     env:
       os: "ubuntu"
       version: "24.04"
-      alias: "noble-numbar"
+      alias: "noble-numbat"
     steps:
       - uses: actions/checkout@v4
       - name: Set up QEMU
