@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  ubuntu-jammy:
+  ubuntu-numbat:
     runs-on: ubuntu-latest
     name: Build on Ubuntu 24.04
     env:

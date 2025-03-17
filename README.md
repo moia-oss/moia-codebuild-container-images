@@ -12,15 +12,17 @@ This is a selection of container images preinstalled with `goenv` and `n` so tha
 
 ### linux/amd64
 
-| Operating System               | Public ECR Repo                                                                               | Tags                 |
-| ------------------------------ | --------------------------------------------------------------------------------------------- | -------------------- |
-| Ubuntu 22.04 (Jammy Jellyfish) | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu) | 22.04, jammy, latest |
+| Operating System               | Public ECR Repo                                                                               | Tags                  |
+| ------------------------------ | --------------------------------------------------------------------------------------------- | --------------------- |
+| Ubuntu 22.04 (Jammy Jellyfish) | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu) | 22.04, jammy, latest  |
+| Ubuntu 24.04 (Noble Numbat)    | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu) | 24.04, numbat, latest |
 
 ### linux/arm64
 
-| Operating System               | Public ECR Repo                                                                               | Tags                 |
-| ------------------------------ | --------------------------------------------------------------------------------------------- | -------------------- |
-| Ubuntu 22.04 (Jammy Jellyfish) | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu) | 22.04, jammy, latest |
+| Operating System               | Public ECR Repo                                                                               | Tags                  |
+| ------------------------------ | --------------------------------------------------------------------------------------------- | --------------------- |
+| Ubuntu 22.04 (Jammy Jellyfish) | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu) | 22.04, jammy, latest  |
+| Ubuntu 24.04 (Noble Numbat)    | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu) | 24.04, numbat, latest |
 
 ## Supported Programming Languages / Runtimes
 
