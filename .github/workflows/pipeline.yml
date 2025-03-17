@@ -17,11 +17,11 @@ on:
 jobs:
   ubuntu-jammy:
     runs-on: ubuntu-latest
-    name: Build on Ubuntu 22.04
+    name: Build on Ubuntu 24.04
     env:
       os: "ubuntu"
-      version: "22.04"
-      alias: "jammy"
+      version: "24.04"
+      alias: "noble-numbar"
     steps:
       - uses: actions/checkout@v4
       - name: Set up QEMU
