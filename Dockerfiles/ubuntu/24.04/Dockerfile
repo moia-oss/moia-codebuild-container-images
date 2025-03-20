@@ -1,4 +1,4 @@
-FROM public.ecr.aws/ubuntu/ubuntu:22.04 AS base
+FROM public.ecr.aws/ubuntu/ubuntu:24.04 AS base
 
 ARG DEBIAN_FRONTEND="noninteractive"
 
@@ -9,8 +9,8 @@ LABEL maintainer="MOIA GmbH" \
 # -----------------------Begin: environment -----------------------
 # Language Version
 
-ENV DEFAULT_GO_VERSION="1.22"
-ENV DEFAULT_NODEJS_VERSION="20"
+ENV DEFAULT_GO_VERSION="1.24"
+ENV DEFAULT_NODEJS_VERSION="22"
 ENV DEFAULT_JAVA_VERSION="11"
 
 ENV GO_VERSION=$DEFAULT_GO_VERSION
@@ -32,15 +32,16 @@ RUN set -ex \
 	&& apt-get -qq --yes upgrade \
 	&& apt-get install -y -qq apt-transport-https gnupg ca-certificates \
 	&& apt-get install -y -qq --no-install-recommends software-properties-common openssh-client \
-	&& mkdir ~/.ssh \
+	&& mkdir -p ~/.ssh \
 	&& touch ~/.ssh/known_hosts \
 	&& ssh-keyscan -t rsa,dsa -H github.com >> ~/.ssh/known_hosts \
 	&& chmod 600 ~/.ssh/known_hosts \
 	&& chmod 700 /usr/local/bin/latest_minor_go_version.sh \
 	&& apt-get install -y -qq --no-install-recommends \
-	git make zip curl locales jq mlocate python3 pip openssl python3-openssl \
+	git make zip curl locales jq plocate python3 pip openssl python3-openssl \
 	&& update-alternatives --install /usr/bin/python python /usr/bin/python3 99 \
-	&& pip3 --quiet install awscliv2 awscurl \
+	&& export PIP_BREAK_SYSTEM_PACKAGES=1 \
+	&& pip3 --quiet  install awscliv2 awscurl \
 	&& awscliv2 --install \
 	&& ln -s $HOME/.awscliv2/binaries/aws /usr/local/bin/aws \
 	&& rm -rf /var/lib/apt/lists/*

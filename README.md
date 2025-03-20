@@ -12,22 +12,22 @@ This is a selection of container images preinstalled with `goenv` and `n` so tha
 
 ### linux/amd64
 
-| Operating System               | Public ECR Repo                                                                               | Tags                 |
-| ------------------------------ | --------------------------------------------------------------------------------------------- | -------------------- |
-| Ubuntu 22.04 (Jammy Jellyfish) | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu) | 22.04, jammy, latest |
+| Operating System               | Public ECR Repo                                                                               | Tags                  |
+| ------------------------------ | --------------------------------------------------------------------------------------------- | --------------------- |
+| Ubuntu 24.04 (Noble Numbat)    | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu) | 24.04, numbat, latest |
 
 ### linux/arm64
 
-| Operating System               | Public ECR Repo                                                                               | Tags                 |
-| ------------------------------ | --------------------------------------------------------------------------------------------- | -------------------- |
-| Ubuntu 22.04 (Jammy Jellyfish) | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu) | 22.04, jammy, latest |
+| Operating System               | Public ECR Repo                                                                               | Tags                  |
+| ------------------------------ | --------------------------------------------------------------------------------------------- | --------------------- |
+| Ubuntu 24.04 (Noble Numbat)    | [public.ecr.aws/moia-oss/codebuild-ubuntu](https://gallery.ecr.aws/moia-oss/codebuild-ubuntu) | 24.04, numbat, latest |
 
 ## Supported Programming Languages / Runtimes
 
 | Platform                        | Major Versions   | Environment Variable | Default Version |
 | ------------------------------- | ---------------- | -------------------- | --------------- |
-| Go                              | 1.19, 1.20, 1.21 | `GO_VERSION`         | 1.20            |
-| NodeJS                          | 14, 16           | `NODEJS_VERSION`     | 14              |
+| Go                              | 1.19, 1.20, 1.21 | `GO_VERSION`         | 1.24            |
+| NodeJS                          | 14, 16           | `NODEJS_VERSION`     | 22              |
 | Java Development Kit (Corretto) | 11, 17           | `JAVA_VERSION`       | 11              |
 
 ### Deprecation Policy
