@@ -1,0 +1,13 @@
+diff --git a/plugins/go-build/bin/go-build b/plugins/go-build/bin/go-build
+index a2e41f3..b7d3e8c 100755
+--- a/plugins/go-build/bin/go-build
++++ b/plugins/go-build/bin/go-build
+@@ -482,7 +482,7 @@ http_get_curl() {
+   fi
+   [ -n "${IPV4}" ] && options="--ipv4"
+   [ -n "${IPV6}" ] && options="--ipv6"
+-  curl -q -o "${2:--}" -SLf ${options} "$1"
++  curl --retry 5 --retry-all-errors --retry-delay 5 --continue-at - -q -o "${2:--}" -SLf ${options} "$1"
+ }
+ 
+ http_head_wget() {
