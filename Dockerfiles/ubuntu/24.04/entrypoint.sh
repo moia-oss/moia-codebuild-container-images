@@ -4,9 +4,21 @@ set -eu
 
 function setup_go_version {
     echo "configuring goenv to use go version $1..."
-    GO_LATEST_MINOR_VERSION=$(latest_minor_go_version.sh $GO_VERSION)
-    goenv install $GO_LATEST_MINOR_VERSION
-    goenv global $GO_LATEST_MINOR_VERSION
+    GO_LATEST_MINOR_VERSION=$(latest_minor_go_version.sh "$1")
+
+    for attempt in 1 2 3; do
+        if goenv install "$GO_LATEST_MINOR_VERSION"; then
+            goenv global "$GO_LATEST_MINOR_VERSION"
+            return
+        fi
+
+        if [ "$attempt" -lt 3 ]; then
+            echo "failed to install Go; retrying in $((attempt * 5)) seconds..."
+            sleep "$((attempt * 5))"
+        fi
+    done
+
+    return 1
 }
 
 function setup_node_version {
