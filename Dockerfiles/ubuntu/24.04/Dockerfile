@@ -22,6 +22,7 @@ ENV LC_CTYPE="C.UTF-8"
 
 COPY entrypoint.sh /entrypoint/entrypoint.sh
 COPY ./tools/latest_minor_go_version.sh /usr/local/bin
+COPY ./tools/go-build-curl-retries.patch /tmp/
 
 WORKDIR /build
 
@@ -58,7 +59,9 @@ RUN git clone https://github.com/tj/n $N_SRC_DIR \
 	&& rm -rf $N_SRC_DIR
 
 # go
-RUN git clone https://github.com/syndbg/goenv.git $HOME/.goenv
+RUN git clone https://github.com/syndbg/goenv.git $HOME/.goenv \
+	&& git -C $HOME/.goenv apply /tmp/go-build-curl-retries.patch \
+	&& rm /tmp/go-build-curl-retries.patch
 ENV PATH="/root/.goenv/shims:/root/.goenv/bin:/go/bin:$PATH"
 ENV GOENV_DISABLE_GOPATH=1
 ENV GOPATH="/go"
