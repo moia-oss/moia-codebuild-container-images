@@ -5,7 +5,6 @@ set -eu
 function setup_go_version {
     echo "configuring goenv to use go version $1..."
     GO_LATEST_MINOR_VERSION=$(latest_minor_go_version.sh "$1")
-    export GO_BUILD_MIRROR_URL="${GO_BUILD_MIRROR_URL:-https://mirrors.aliyun.com/golang}"
 
     for attempt in 1 2 3; do
         if goenv install "$GO_LATEST_MINOR_VERSION"; then
